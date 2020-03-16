@@ -1,6 +1,6 @@
 # Torch-Drowsiness-Monitor
 
-The problem of drowsiness when handling or performing tasks such as driving or handling heavy machinery and the blind spot when driving.
+Drowsiness and atention monitor for driving or handling heavy machinery. Also detects objects at the blind spot via CV and the Jetson Nano. And has a crash detection feature.
 
 <img src="https://i.ibb.co/1MC19TG/Logo.png" width="1000">
 
