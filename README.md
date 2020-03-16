@@ -85,6 +85,8 @@ https://www.amazon.com/s?k=usb+hub&ref=nb_sb_noss_1
 https://www.velleman.eu/products/view?id=435512
 
 Software:
+- Pytorch:
+https://pytorch.org/
 - JetPack 4.3:
 https://developer.nvidia.com/jetson-nano-sd-card-image-r3231
 - YOLOv3:
@@ -95,8 +97,8 @@ https://opencv.org/
 https://www.twilio.com/
 - Arduino IDE:
 https://www.arduino.cc/en/Main/Software
-- CloudMQTT:
-https://www.cloudmqtt.com/
+- Mosquitto MQTT:
+https://mosquitto.org/
 
 # Connection Diagram:
 
@@ -137,7 +139,7 @@ After soldering our circuit looks like so:
 This next video show us how to setup our hardware:
 
 Video: Click on the image
-[![Setup](https://i.ibb.co/jRBdzqS/Logo.png)](https://youtu.be/a8YcOPVFyD8)
+[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/a8YcOPVFyD8)
 
 Curious Fact: The Nvidia Jetson Nano has the same IO pin distribution as a Raspberry Pi, so every shield for the Pi is backwards compatible with the Nano!
 
@@ -174,43 +176,6 @@ The command that I use in MY case is:
 In Window's case you can access it from any SSH connection assistant such as Putty.
 
 https://www.putty.org/
-
-Here is an example of how to do that with Putty:
-
-<img src="https://i.ibb.co/4pK0M38/ezgif-com-video-to-gif-7.gif" width="1000">
-
-## Libraries Setup:
-
-The first library to install is OpenCV Contrib, this will be installed using the following series of commands.
-
-    git clone https://github.com/JetsonHacksNano/buildOpenCV
-
-    cd buildOpenCV
-
-    ./buildOpenCV.sh |& tee openCV_build.log
-
-**This process can take up to 4 hours, so if possible, go out and clear yourself for a while, while this process ends.**
-
-    sudo apt-get install python-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsdl1.2-dev libsmpeg-dev python-numpy subversion libportmidi-dev ffmpeg libswscale-dev libavformat-dev libavcodec-dev
-
-    pip3 install paho-mqtt pygame twilio smbus
-
-After this we will have installed all the libraries necessary for the project to work properly.
-
-## Files Download
-
-To download and configure the project to the Jetson Nano, run the following commands.
-
-    git clone https://github.com/AlexSanch/Jetson-Drowsiness-Driving-Monitor
-    cd "Jetson-Drowsiness-Driving-Monitor/Python Scripts/yolo-coco/"
-    wget https://pjreddie.com/media/files/yolov3.weights
-
-Now we have all the libraries correctly installed.
-
-* OpenCV Contrib
-* YoloV3 (only model)
-* Twilio
-* PahoMQTT
 
 ## Twilio Setup
 
@@ -264,21 +229,13 @@ A number will be automatically offered, save this number for later and press "Ch
 
 <img src="https://twilio-cms-prod.s3.amazonaws.com/images/Screen_Shot_2017-11-30_at_8.49.18_AM.width-800.png" width="1000">
 
-## Cloud MQTT setup
+## Mosquitto MQTT setup
 
-Create an account in Cloud MQTT.
-https://www.cloudmqtt.com/
+Create your own Mosquitto MQTT.
 
-Save the credentials of "Server", "User", "Password" and "Port".
+https://mosquitto.org/
 
-<img src="https://i.ibb.co/B211SKn/mqtt.png" width="1000">
-
-## Files Setup
-
-To edit the files we have to use the Vim editor that comes by default in the Jetson Nano, the following video shows what to do:
-
-Video: Click on the image
-[![Setup](https://i.ibb.co/jRBdzqS/Logo.png)](https://youtu.be/jBGH1M6HKVo)
+<img src="https://mosquitto.org/images/mosquitto-text-side-28.png" width="1000">
 
 ## Setup boot start scripts
 
