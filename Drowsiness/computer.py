@@ -149,10 +149,10 @@ def drow(images, model_name):
                     timerundis= time.time()
                     pygame.mixer.music.load(file)
                     pygame.mixer.music.play()
-                    #if((timerundis-timebasedis)>1):
-                    image = cv2.imread("display.jpg")
-                    image = cv2.putText(image, 'Distracted', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-                    cv2.imwrite('display.jpg',image)
+                    if((timerundis-timebasedis)>2):
+                        image = cv2.imread("display.jpg")
+                        image = cv2.putText(image, 'Distracted', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+                        cv2.imwrite('display.jpg',image)
                 
                 else:
                     timebasedis= time.time()
