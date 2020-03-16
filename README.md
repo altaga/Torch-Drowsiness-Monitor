@@ -2,7 +2,7 @@
 
 The problem of drowsiness when handling or performing tasks such as driving or handling heavy machinery and the blind spot when driving.
 
-<img src="https://i.ibb.co/jRBdzqS/Logo.png" width="1000">
+<img src="https://i.ibb.co/1MC19TG/Logo.png" width="1000">
 
 # Table of contents
 
@@ -102,7 +102,7 @@ https://www.cloudmqtt.com/
 
 This is the connection diagram of the system:
 
-<img src="https://i.ibb.co/KmkyKDS/Scheme.png" width="800">
+<img src="https://i.ibb.co/0DJTFs4/Scheme.png" width="800">
 
 # Jetson Nano Setup:
 
