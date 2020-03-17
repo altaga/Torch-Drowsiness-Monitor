@@ -148,9 +148,14 @@ Code to install all the libraries:
 
 Los códigos para correr en la laptop tienen las siguientes modificaciones.
 
-- Estan comentados los segmentos de codigo que involucran lectura del sensor del acelerometro.
-- Esta comentada la seccion de MQTT, en vez de eso los mansajes del MQTT se despliegan en la consola de python.
-- Esta comentada la seccion de notificacion de choque debido a que esta depende de la configuracion de Twilio y el uso del acelerometro.
+- Están comentados los segmentos de código que involucran lectura del sensor del acelerometro.
+- Esta comentada la sección de MQTT, en vez de eso los mensajes del MQTT se despliegan en la consola de python.
+- Esta comentada la sección de notificación de choque debido a que esta depende de la configuración de Twilio y el uso del acelerometro.
+
+Los códigos que se ejecutan en la computadora son los siguientes:
+
+- https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/Drowsiness/computer.py
+- 
 
 Para ejecutar los códigos correctamente solo es necesario ejecutarlos como se muestra a continuación.
 
@@ -168,9 +173,6 @@ To download the operating system of the Jetson Nano enter the following link:
 https://developer.nvidia.com/jetson-nano-sd-card-image
 
 Format the SD card with SD Card Formatter and Flash the operating system in the SD with Etcher.
-
-Video: Click on the image
-[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/tIUA2fRjauI)
 
 ## Hardware Setup:
 
@@ -193,7 +195,7 @@ After soldering our circuit looks like so:
 This next video show us how to setup our hardware:
 
 Video: Click on the image
-[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](LINK)
+[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/tIUA2fRjauI)
 
 Curious Fact: The Nvidia Jetson Nano has the same IO pin distribution as a Raspberry Pi, so every shield for the Pi is backwards compatible with the Nano!
 
@@ -291,12 +293,30 @@ https://mosquitto.org/
 
 <img src="https://mosquitto.org/images/mosquitto-text-side-28.png" width="1000">
 
+Una vez instalado el mqtt server este iniciara en el boot de la board.
+
+## Support Libraries Setup:
+
+- OpenCV
+- pillow
+- torchvision
+- requests
+- twilio
+- pygame
+- matplotlib
+- paho-mqtt
+
+Code to install all the libraries:
+
+    pip install opencv-python Pillow torchvision requests twilio pygame matplotlib paho-mqtt smbus 
+
 ## Setup boot start scripts
 
 In order for both files to run at the same time on the device's boot, we must run the following commands to create an rc.local file and give it the permission to run both scripts.
 
-    cd
-    sudo mv "Jetson-Drowsiness-Driving-Monitor/Config File/rc.local" /etc/rc.local
+    sudo apt-get update
+    sudo apt-get install nano
+    sudo mv "Torch-Drowsiness-Monitor/Config File/rc.local" /etc/rc.local
     sudo chmod u+x /etc/rc.local
 
 The rc.local content is:
@@ -305,8 +325,8 @@ The rc.local content is:
 
     sleep 10
 
-    sudo python3 "Jetson-Drowsiness-Driving-Monitor/Python Scripts/Drowsiness.py" &
-    sudo python3 "Jetson-Drowsiness-Driving-Monitor/Python Scripts/Yolo.py" &
+    sudo python3 "Torch-Drowsiness-Monitor/YoloV3/detect.py" &
+    sudo python3 "Torch-Drowsiness-Monitor/Drowsiness/check.py" &
 
 
 # ESP32 Setup
@@ -333,19 +353,19 @@ The web application gives us the code to copy and paste in our arduino project.
 
 The device code is in the "Arduino" folder and all we have to do is configure the WiFi and MQTT credentials.
 
-<img src="https://i.ibb.co/x2KRmKM/image.png" width="1000">
+<img src="https://i.ibb.co/LJH9jhp/image.png" width="1000">
 
 # Drowsiness Monitor:
 
 Let's go through a revision of the algorithms and procedures of both CV systems (Drowsiness and alert on one side and Blind spot detection on the other). The installation is remarkably easy as I have already provided an image for the project.
 
-ALL the code is well explained in the respective Github file: https://github.com/AlexSanch/Jetson-Drowsiness-Driving-Monitor
+ALL the code is well explained in the respective Github file: https://github.com/altaga/Torch-Drowsiness-Monitor
 
 Look for the two Python files: Drowsiness and Yolo:
 
-https://github.com/AlexSanch/Jetson-Drowsiness-Driving-Monitor/blob/master/Python%20Scripts/Drowsiness.py
+https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/Drowsiness/check.py
 
-https://github.com/AlexSanch/Jetson-Drowsiness-Driving-Monitor/blob/master/Python%20Scripts/Yolo.py
+https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/YoloV3/detect.py
 
 Those are the two that make all the magic happen.
 
@@ -354,9 +374,10 @@ Please take a look at it for extensive explanation and documentation.
 The sleep monitor uses the following libraries:
 
 - OpenCV:
-- Image processing
-    - Haarcascades implementation.
-    - Flashing speed detection.
+- Image processing. 
+    - (OpenCV) Haarcascades implementation. 
+    - (OpenCV) Blink eye speed detection.
+    - (Pytorch) Eye Status (Open / Close)
 - Pygame: 
     - Player sound alert.
 - Smbus:
@@ -376,19 +397,25 @@ The flicker detection algorithm is as follows:
 
 <img src="https://i.ibb.co/StK0t2x/Abiertos.png" width="600">
 
-- Thanks to the sensitivity of the Haarcascades we can use that in our favor. If a scaleFactor = 1.1 and minNeighbors = 40 is selected we can detect eyes only if the person has them open.
+- Una vez hemos detectado los ojos, los recortamos de la imagen para poder usarlos como entrada de nuestra red convolucional de PyTorch.
 
-<img src="https://i.ibb.co/j4RQSdv/Cerrados.png" width="600">
+<img src="https://i.ibb.co/0FYT0DN/Abiertoss.png" width="600">
+
+- El modelo esta diseñado para detectar el estado de los ojos, por lo tanto es necesario que al menos uno de los ojos sea detectado como abierto para que el algoritmo no empiece a generar alertas, si detecta que ambos ojos están cerrados por al menos 2 segundos, se activara la alerta, como la seguridad del sistema es lo principal, el algoritmo tiene una segunda capa de seguridad explicada a continuación. 
 
 - Because a blink lasts approximately 350 milliseconds then a single blink will not cause problems, however once the person keeps blinking for more than 2 or 3 seconds (according to our criteria) it will mean for the system that the person is falling asleep. Not separating the eyes from the road being one of the most important rules of driving.
 
 <img src="https://i.ibb.co/kQ12W79/alert1.png" width="600">
 <img src="https://i.ibb.co/LdVD7v2/alert2.png" width="600">
 
-- Also during the demo I found a very interesting use case, when one turns to look at his cell phone, the system also detects that you are not seeing the road. This being a new aspect that we will be exploring in future versions of the system to improve detection when a driver is not looking at the road and is distracted. But, for now it is one of those unintended great finds.
+- Also during the development I found a incredible use case, when one turns to look at his cell phone, the system also detects that you are not seeing the road. This being a new aspect that we will be exploring in future versions of the system to improve detection when a driver is not looking at the road and is distracted. But, for now it is one of those unintended great finds.
 
 <img src="https://i.ibb.co/mHZ4VdX/Cel.png" width="600">
 <img src="https://i.ibb.co/3k512YS/cel2.png" width="600">
+
+Ya sea por el modelo de redes convolucionales de pytorch o por las Haarcascades, el monitor no permitirá que desvíes la mirada del camino, ya que es sumamente peligroso hacer eso mientras uno conduce.
+
+<img src="https://i.ibb.co/D84YbYb/Whats-App-Image-2020-03-16-at-12-35-40.jpg" width="600">
 
 # Blind Spot Monitor:
 
@@ -396,12 +423,12 @@ The blind Spot monitor uses the following libraries:
 
 - OpenCV:
     - Image processing
-    - DNN implementation.
-        - The weights of the DNN were obtained from YoloV3.
-- MQTT: 
+    - CDNN implementation.
+        - The weights of the CDNN were obtained from YoloV3 and imported by PyTorch.
+- MQTT with Mosquitto: 
     - Communication with the ESP32.
 
-In this algorithm we use the detection of objects using YoloV3 and OpenCV Contrib which allows the use of DNN.
+In this algorithm we use the detection of objects using PyTorch, YoloV3 and OpenCV which allows the use of CDNN.
 
 <img src="https://i.ibb.co/S3Wz9Sc/process2.jpg" width="600">
 
@@ -441,19 +468,25 @@ Testing the algorithm with the camera.
 
 Once having this distance, we will filter all distances that are greater than 2 meters, this being a safe distance to the car at the blind spot.
 
-In turn, we will determine in which of the 2 blind spots the object is, right or left. Depending on the object and the side, the information will be sent via MQTT to the display. For example a car on the left side:
+<img src="https://i.ibb.co/mzNdqVp/Whats-App-Image-2020-03-16-at-13-57-36.jpg" width="600">
+
+In turn, we will determine in which of the 2 blind spots the object is, right or left. Depending on the object and the side, the information will be sent via Mosquitto MQTT to the display. For example a car on the left side:
 
 <img src="https://i.ibb.co/dMcL9gn/20200210-203839.jpg" width="600">
+
 
 # The Final Product:
 
 Product:
 
 <img src="https://i.ibb.co/gJB4f6R/20200210-212714.jpg" width="800">
-<img src="https://i.ibb.co/MZJGWgC/20200210-212619.jpg" width="800">
-<img src="https://i.ibb.co/brvXxm7/20200210-212701.jpg" width="800">
-<img src="https://i.ibb.co/XD4gZD9/20200210-212840.jpg" width="800">
-<img src="https://i.ibb.co/LnqmYyF/20200210-212852.jpg" width="800"> 
+<img src="https://i.ibb.co/99tCmt8/Whats-App-Image-2020-03-16-at-12-22-56.jpg" width="800">
+<img src="https://i.ibb.co/sKLmfKq/Whats-App-Image-2020-03-16-at-12-22-57.jpg" width="800">
+
+Product installed inside the car:
+
+<img src="https://i.ibb.co/yQgJGfk/Whats-App-Image-2020-03-16-at-14-03-07-1.jpg" width="800">
+<img src="https://i.ibb.co/6J5jSB5/Whats-App-Image-2020-03-16-at-14-03-07.jpg" width="800"> 
 
 Notifications:
 
@@ -462,7 +495,7 @@ Notifications:
 ### Epic DEMO:
 
 Video: Click on the image
-[![Car](https://i.ibb.co/jRBdzqS/Logo.png)](https://youtu.be/GYoLvldvk-s)
+[![Car](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/X51jBfcTQxg)
 
 Sorry github does not allow embed videos.
 
@@ -477,6 +510,9 @@ That middle ground between the Analog, primarily mechanical-based private transp
 Links:
 
 (1) https://medlineplus.gov/healthysleep.html
+
 (2) http://www.euro.who.int/__data/assets/pdf_file/0008/114101/E84683.pdf
+
 (3) https://dmv.ny.gov/press-release/press-release-03-09-2018
+
 (4) https://www.nhtsa.gov/risky-driving/drowsy-driving
