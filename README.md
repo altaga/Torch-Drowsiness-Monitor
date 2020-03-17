@@ -152,16 +152,23 @@ La database que se utilizo es una base de datos con 4846 imágenes de ojos izqui
 El entrenamiento tiene como entrada los siguientes parámetros.
 
 input image shape: (24, 24)
+
 validation_ratio: 0.1
+
 batch_size: 64
+
 epochs: 40
+
 learning rate: 0.001
+
 loss function: cross entropy loss
+
 optimizer: Adam
 
 En la primera parte del codigo puedes modificar los parametros, segun tu criterio de entrenamiento.
 
 Drowsiness Monitor:
+
 - https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/Drowsiness/train.py
 
 Video: Click on the image
@@ -182,12 +189,14 @@ Para abrir el Spyder IDE escribir en la consola de comandos de anaconda:
     spyder
 
 Drowsiness Monitor:
+
 - https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/Drowsiness/computer.py
 
 Video: Click on the image
 [![Torch](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/9Degq6HjrGE)
 
 YoloV3:
+
 - https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/YoloV3/computer.py
 
 Video: Click on the image
