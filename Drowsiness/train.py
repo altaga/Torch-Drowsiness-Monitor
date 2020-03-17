@@ -1,11 +1,8 @@
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
-import numpy as np
 import random
 import model
-import csv
-import  matplotlib.pyplot as plt
 import glob
 from PIL import Image
 from torchvision.transforms import ToTensor
@@ -15,17 +12,13 @@ import cv2
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
-if not torch.cuda.is_available():
-    from torchsummary import summary
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 shape = (24, 24)
-
 validation_ratio = 0.1
-
+lr = 0.001
 batch_size = 64
-epochs = 40
+epochs = 12
 
 
 def resize(image, bbox):
@@ -91,17 +84,14 @@ class DataSet(torch.utils.data.Dataset):
 def main():
     global batch_size
     global epochs
-    # variables  -------------
-    lr = 0.001
+    global lr
+    
     # ------------------------
 
     factory = DataSetFactory()
     training_loader = DataLoader(factory.training, batch_size=batch_size, shuffle=True, num_workers=1)
     validation_loader = DataLoader(factory.validation, batch_size=batch_size, shuffle=True, num_workers=1)
     network = model.Model(num_classes=2).to(device)
-    if not torch.cuda.is_available():
-        summary(network, (1, shape[0], shape[1]))
-
     optimizer = torch.optim.Adam(network.parameters(), lr=lr)
     criterion = nn.CrossEntropyLoss()
 
