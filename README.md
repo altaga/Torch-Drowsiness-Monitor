@@ -111,15 +111,15 @@ https://www.anaconda.com/distribution/
 
 ## Environment Creation:
 
-Primero crearemos un enviroment adecuado para pytorch.
+First we will create a suitable enviroment for pytorch.
 
     conda create --name pytorch
 
-Para activar el enviroment ejecuta el siguiente comando:
+To activate the enviroment run the following command:
 
     activate pytorch
 
-En el caso de Anaconda la pagina de PyTorch tiene un pequeño widget que permite personalizar el código de instalación de PyTorch según el sistema operativo y el gestor de environments de python, en mi caso la configuración es la siguiente.
+In the case of Anaconda the PyTorch page has a small widget that allows you to customize the PyTorch installation code according to the operating system and the python environment manager, in my case the configuration is as follows.
 
 https://pytorch.org/
 
@@ -129,7 +129,7 @@ https://pytorch.org/
 
 ## Support Libraries:
 
-Ademas de el comando antes mencionado, es necesario instalar las siguientes librerias para que los codigos se ejecuten sin problema.
+In addition to the aforementioned command, it is necessary to install the following libraries so that the codes can be executed without problem.
 
 - OpenCV
 - pillow
@@ -145,13 +145,13 @@ Code to install all the libraries:
 
 ## Model Creation:
 
-Dentro de la carpeta de "https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness/Model" ya existe mi modelo llamado "BlinkModel.t7" que es el que uso para todas las pruebas, sin embargo el modelo puedes entrenarlo tu con el código llamado "train.py" en la carpeta "https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness".
+Inside the "https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness/Model" folder our model called "BlinkModel.t7" already exists, which is the one I use for all tests, however the model can be trained by yourself with the code called "train.py" in the folder "https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness".
 
-La database que se utilizo es una base de datos con 4846 imágenes de ojos izquierdos y derechos, abiertos y cerrados, donde aproximadamente la mitad son abiertos y cerrados para que la red fuera capaz de identificar el estado de los ojos, la base de datos esta en la siguiente carpeta.
+The database that was used, is a database with 4846 images of left and right eyes, open and closed, where approximately half are open and closed so that the network was able to identify the state of the eyes, the database is in the following folder:
 
 https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness/dataset/dataset_B_Eye_Images
 
-El entrenamiento tiene como entrada los siguientes parámetros.
+The training has the following parameters as input.
 
 - input image shape: (24, 24)
 - validation_ratio: 0.1
@@ -161,7 +161,7 @@ El entrenamiento tiene como entrada los siguientes parámetros.
 - loss function: cross entropy loss
 - optimizer: Adam
 
-En la primera parte del codigo puedes modificar los parametros, segun tu criterio de entrenamiento.
+In the first part of the code you can modify the parameters, according to your training criteria.
 
 Drowsiness Monitor:
 
@@ -170,18 +170,17 @@ Drowsiness Monitor:
 Video: Click on the image
 [![Torch](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/y87Hht7-fkE)
 
-## Files Changes:
+## File Changes:
 
-Los códigos para correr en la laptop tienen las siguientes modificaciones.
+The codes to run on the laptop have the following modifications:
 
-- Están comentados los segmentos de código que involucran lectura del sensor del acelerometro.
-- Esta comentada la sección de MQTT, en vez de eso los mensajes del MQTT se despliegan en la consola de python.
-- Esta comentada la sección de notificación de choque debido a que esta depende de la configuración de Twilio y el uso del acelerometro.
+- The code segments that involve reading the accelerometer sensor are commented.
+- The MQTT section is commented, instead the MQTT messages are displayed in the python console.
+- The crash notification section is commented because it depends on the Twilio configuration and the use of the accelerometer.
 
-Los códigos que se ejecutan en la computadora son los siguientes y un video de como se ejecutan en tiempo real con Anaconda Spyder (paquete que ya instalamos previamente):
+The codes that are executed in the computer are the following and a video of how they are executed in real time with Anaconda Spyder (package that we previously installed):
 
-Para abrir el Spyder IDE escribir en la consola de comandos de anaconda:
-
+To open the Spyder IDE write in the anaconda command console:
     spyder
 
 Drowsiness Monitor:
@@ -198,7 +197,7 @@ YoloV3:
 Video: Click on the image
 [![Torch](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/auCgnU7oglc)
 
-Ya que pudimos comprobar que todos los codigos funcionan podemos pasar a la configuracion de nuestro hardware para realizar nuestro producto.
+Since we could check that all the codes work, we can go to the configuration of our hardware to make our product.
 
 # Jetson Nano Setup:
 
