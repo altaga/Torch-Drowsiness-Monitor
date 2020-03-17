@@ -125,7 +125,7 @@ https://pytorch.org/
 
 <img src="https://i.ibb.co/6RMJp5F/image.png" width="800">
 
-    conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+    conda install pytorch torchvision spyder cudatoolkit=10.1 -c pytorch
 
 ## Support Libraries:
 
@@ -133,7 +133,6 @@ Ademas de el comando antes mencionado, es necesario instalar las siguientes libr
 
 - OpenCV
 - pillow
-- torchvision
 - requests
 - twilio
 - pygame
@@ -142,7 +141,7 @@ Ademas de el comando antes mencionado, es necesario instalar las siguientes libr
 
 Code to install all the libraries:
 
-    pip install opencv-python Pillow torchvision requests twilio pygame matplotlib paho-mqtt
+    pip install opencv-python Pillow requests twilio pygame matplotlib paho-mqtt
 
 ## Files Changes:
 
@@ -152,18 +151,23 @@ Los códigos para correr en la laptop tienen las siguientes modificaciones.
 - Esta comentada la sección de MQTT, en vez de eso los mensajes del MQTT se despliegan en la consola de python.
 - Esta comentada la sección de notificación de choque debido a que esta depende de la configuración de Twilio y el uso del acelerometro.
 
-Los códigos que se ejecutan en la computadora son los siguientes:
+Los códigos que se ejecutan en la computadora son los siguientes y un video de como se ejecutan en tiempo real con Anaconda Spyder (paquete que ya instalamos previamente):
+
+Para abrir el Spyder IDE escribir en la consola de comandos de anaconda:
+
+    spyder
 
 Drowsiness Monitor:
 - https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/Drowsiness/computer.py
 
+Video: Click on the image
+[![Torch](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/9Degq6HjrGE)
+
 YoloV3:
 - https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/YoloV3/computer.py
 
-Para ejecutar los códigos correctamente solo es necesario ejecutarlos como se muestra a continuación.
-
 Video: Click on the image
-[![Torch](https://i.ibb.co/1MC19TG/Logo.png)](https://www.youtube.com/watch?v=Jg_PpRa7XLs)
+[![Torch](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/auCgnU7oglc)
 
 Ya que pudimos comprobar que todos los codigos funcionan podemos pasar a la configuracion de nuestro hardware para realizar nuestro producto.
 
