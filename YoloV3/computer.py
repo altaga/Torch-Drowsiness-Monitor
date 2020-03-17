@@ -11,12 +11,14 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.ticker import NullLocator
 import cv2
-import paho.mqtt.client as paho
+#import paho.mqtt.client as paho
 import math
 
 #objects=[70,220,120,50] #person:70, cars:220, motorcycle:120, dogs:50
 objects=[70,220,120,50] #person:70, cars:220, motorcycle:120, dogs:50
 # This function trigger if the client connected
+
+"""
 def on_connect(client, userdata, flags, rc):
     print("Connection returned result: " + str(rc) )
     #client.subscribe("#" , 1 ) # Wild Card
@@ -42,6 +44,8 @@ mqttc.on_subscribe = on_subscribe
 mqttc.connect("localhost", 1883, keepalive=60)
 rc = 0
 
+"""
+
 imagesp = "Images"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -57,7 +61,7 @@ classes = load_classes("data/coco.names")  # Extracts class labels from file
 video_capture = cv2.VideoCapture(0)
 
 while 1:
-    mqttc.loop()
+    #mqttc.loop()
     ret, frame = video_capture.read()
     cv2.imwrite('Images/test.jpg',frame) 
     distance=100000
@@ -140,19 +144,24 @@ while 1:
                 COLORS2 = int(254 * math.sin(i+1))
                 COLORS3 = int(254 * math.sin(i+2))
                 color= (COLORS1,COLORS2,COLORS3)
-                distance=(check*16)/(19*(x2.item()/W))
+                distance=(check*16)/(19*((x2.item()-x1.item())/W))
+                add=add+str(round(distance/100,1))+" m"
                 if(distance<distancemem):
                     # Checking if the object is less than 3 meters from our car.
-                    if(300>distance):
+                    if(100>distance):
                         distancemem=distance
                         labelmod = labelmem
                         print(labelmod)
-                        add=add+"close "
+                        add=add+" close"
                         #print(classes[int(cls_pred)])
 
 
                 # Create a Rectangle patch
                 cv2.rectangle(imag, (int(x1), int(y1)), (int(x2), int(y2)), color, 2)
                 cv2.putText(imag, classes[int(cls_pred)]+add,(x1, y1-20), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
-    mqttc.publish('inTopic', labelmod)
+    #mqttc.publish('inTopic', labelmod)
+    img = imag
+    cv2.imshow('image',img) 
+    k = cv2.waitKey(30) & 0xff
+
 

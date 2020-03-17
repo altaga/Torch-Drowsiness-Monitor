@@ -15,7 +15,7 @@ import paho.mqtt.client as paho
 import math
 
 #objects=[70,220,120,50] #person:70, cars:220, motorcycle:120, dogs:50
-objects=[70,220,120,50] #person:70, cars:220, motorcycle:120, dogs:50
+objects=[200,220,120,50] #person:70, cars:220, motorcycle:120, dogs:50
 # This function trigger if the client connected
 def on_connect(client, userdata, flags, rc):
     print("Connection returned result: " + str(rc) )
@@ -143,7 +143,7 @@ while 1:
                 distance=(check*16)/(19*(x2.item()/W))
                 if(distance<distancemem):
                     # Checking if the object is less than 3 meters from our car.
-                    if(220>distance):
+                    if(300>distance):
                         distancemem=distance
                         labelmod = labelmem
                         print(labelmod)
@@ -162,7 +162,7 @@ while 1:
     dim = (width, height)
     # resize image
     resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-    cv2.imshow('image',img) 
+    cv2.imshow('image',resized) 
     k = cv2.waitKey(30) & 0xff
 
 

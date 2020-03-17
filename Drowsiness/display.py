@@ -5,12 +5,19 @@ import model
 from PIL import Image
 from torchvision import transforms
 from grad_cam import BackPropagation
+import pygame
 import time 
 import smbus
 import requests
 from twilio.rest import Client
 import urllib.request
 import json
+
+# Alarm sound file
+file = 'alarm.mp3'
+# Sound player start
+pygame.init()
+pygame.mixer.init()
 
 class MMA7455():
     bus = smbus.SMBus(1)
@@ -36,11 +43,11 @@ sens=30
 
 def send():
     # Your Account SID from twilio.com/console
-    account_sid = "xxxxxxxxxxxxxx"
+    account_sid = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     # Your Auth Token from twilio.com/console
-    auth_token  = "xxxxxxxxxxxxxxxxxx"
+    auth_token  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     client = Client(account_sid, auth_token)
-    phone = "+xxxxxxxxxxxxxxxxxxx"
+    phone = "+XXXXXXXXXXXX"
     print('crash')
     send_url = 'http://ip-api.com/json'
     r = requests.get(send_url)
@@ -48,7 +55,7 @@ def send():
     text="The Driver Crash Here: "
     text+="http://maps.google.com/maps?q=loc:{},{}".format(j['lat'],j['lon'])
     print(text)
-    message = client.messages.create(to=phone, from_="+xxxxxxxxxxxxxxxxxx",body=text)
+    message = client.messages.create(to=phone, from_="++XXXXXXXXXXXX",body=text)
     print(message.sid)
     time.sleep(10)
     stop()
@@ -61,6 +68,10 @@ mma = MMA7455()
 xmem=mma.getValueX()
 ymem=mma.getValueY()
 zmem=mma.getValueZ()
+x = mma.getValueX()
+y = mma.getValueY()
+z = mma.getValueZ()
+
 
 # Creating the base accelerometer values.
 
@@ -70,6 +81,12 @@ if(ymem > 127):
     ymem=ymem-255
 if(zmem > 127):
     zmem=zmem-255
+if(x > 127):
+    x=x-255
+if(y > 127):
+    y=y-255
+if(z > 127):
+    z=z-255
 
 timebasedrow= time.time()
 timebasedis= time.time()
@@ -110,7 +127,7 @@ def preprocess(image_path):
         face = image[y:y + h, x:x + w]
         cv2.rectangle(image,(x,y),(x+w,y+h),(255,255,0),2)
         roi_color = image[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(face,1.3, 10) 
+        eyes = eye_cascade.detectMultiScale(face,1.3, 20) 
         i=0
         for (ex,ey,ew,eh) in eyes:
             (x, y, w, h) = eyes[i]
@@ -176,16 +193,21 @@ def drow(images, model_name):
                 if(status =="Close"):
                     print("Distracted")
                     timerundis= time.time()
-                    #if((timerundis-timebasedis)>1):
-                    image = cv2.imread("display.jpg")
-                    image = cv2.putText(image, 'Distracted', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-                    cv2.imwrite('display.jpg',image)
+                    if((timerundis-timebasedis)>2):
+                        image = cv2.imread("display.jpg")
+                        image = cv2.putText(image, 'Distracted', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+                        cv2.imwrite('display.jpg',image)
+                        pygame.mixer.music.load(file)
+                        pygame.mixer.music.play()
                 
                 else:
+                    pygame.mixer.music.stop()
                     timebasedis= time.time()          
         else:
             timerundrow= time.time()
-            if((timerundrow-timebasedrow)>1):
+            if((timerundrow-timebasedrow)>2):
+                pygame.mixer.music.load(file)
+                pygame.mixer.music.play()
                 image = cv2.imread("display.jpg")
                 image = cv2.putText(image, 'Drowsy', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
                 cv2.imwrite('display.jpg',image)
@@ -210,7 +232,6 @@ if __name__ == "__main__":
         x = mma.getValueX()
         y = mma.getValueY()
         z = mma.getValueZ()
-        print(x,y,z)
         if(x > 127):
             x=x-255
         if(y > 127):
@@ -220,7 +241,7 @@ if __name__ == "__main__":
         # Send sms if crash
         if(abs(xmem-x)>sens or abs(ymem-y)>sens or abs(zmem-z)>sens):
             send()
-            print('crash')
+            print('Crash')
         main()
         img = cv2.imread("display.jpg")
         scale_percent = 50 # percent of original size
@@ -229,7 +250,5 @@ if __name__ == "__main__":
         dim = (width, height)
         # resize image
         resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-        cv2.imshow('image',img) 
+        cv2.imshow('image',resized) 
         k = cv2.waitKey(30) & 0xff
-        
-

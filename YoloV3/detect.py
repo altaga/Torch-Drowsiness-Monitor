@@ -111,10 +111,10 @@ while 1:
                 add=" "
                 
                 if((W/2)<(x1+((x2-x1)/2)).item()):
-                    pos="1"
+                    pos="0"
                     add=add+"left "
                 else:
-                    pos="0"
+                    pos="1"
                     add=add+"right "
                 i=0
                 if(classes[int(cls_pred)]=="motorbike"):
