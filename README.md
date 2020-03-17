@@ -105,7 +105,7 @@ This is the connection diagram of the system:
 
 # Laptop Test:
 
-Para realizar el test del código en una computadora el primer paso sera tener un gestor de python environments como lo es Python Anaconda.
+To test the code on a computer, the first step will be to have a python environments manager, such as Python Anaconda.
 
 https://www.anaconda.com/distribution/
 
