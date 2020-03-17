@@ -432,11 +432,11 @@ The flicker detection algorithm is as follows:
 
 <img src="https://i.ibb.co/StK0t2x/Abiertos.png" width="600">
 
-- Una vez hemos detectado los ojos, los recortamos de la imagen para poder usarlos como entrada de nuestra red convolucional de PyTorch.
+- Once we have detected the eyes, we cut them out of the image so that we can use them as input for our convolutional PyTorch network.
 
 <img src="https://i.ibb.co/0FYT0DN/Abiertoss.png" width="600">
 
-- El modelo esta diseñado para detectar el estado de los ojos, por lo tanto es necesario que al menos uno de los ojos sea detectado como abierto para que el algoritmo no empiece a generar alertas, si detecta que ambos ojos están cerrados por al menos 2 segundos, se activara la alerta, como la seguridad del sistema es lo principal, el algoritmo tiene una segunda capa de seguridad explicada a continuación. 
+- The model is designed to detect the state of the eyes, therefore it is necessary that at least one of the eyes is detected as open so that the algorithm does not start generating alerts, if it detects that both eyes are closed for at least 2 seconds , the alert will be activated, since the security of the system is the main thing, the algorithm has a second layer of security explained below.
 
 - Because a blink lasts approximately 350 milliseconds then a single blink will not cause problems, however once the person keeps blinking for more than 2 or 3 seconds (according to our criteria) it will mean for the system that the person is falling asleep. Not separating the eyes from the road being one of the most important rules of driving.
 
@@ -448,7 +448,7 @@ The flicker detection algorithm is as follows:
 <img src="https://i.ibb.co/mHZ4VdX/Cel.png" width="600">
 <img src="https://i.ibb.co/3k512YS/cel2.png" width="600">
 
-Ya sea por el modelo de redes convolucionales de pytorch o por las Haarcascades, el monitor no permitirá que desvíes la mirada del camino, ya que es sumamente peligroso hacer eso mientras uno conduce.
+Whether it's because of the pytorch convolutional network model or the Haarcascades, the monitor will not allow you to take your eyes off the road, as it is extremely dangerous to do that while driving.
 
 <img src="https://i.ibb.co/D84YbYb/Whats-App-Image-2020-03-16-at-12-35-40.jpg" width="600">
 
