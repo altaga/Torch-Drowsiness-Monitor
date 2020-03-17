@@ -24,6 +24,9 @@ shape = (24, 24)
 
 validation_ratio = 0.1
 
+batch_size = 64
+epochs = 40
+
 
 def resize(image, bbox):
     (x,y,w,h) = bbox
@@ -37,10 +40,10 @@ class DataSetFactory:
         images = []
         labels = []
 
-        files = list(map(lambda x: {'file': x, 'label':1}, glob.glob('../dataset/dataset_B_Eye_Images/openRightEyes/*.jpg')))
-        files.extend(list(map(lambda x: {'file': x, 'label':1}, glob.glob('../dataset/dataset_B_Eye_Images/openLeftEyes/*.jpg'))))
-        files.extend(list(map(lambda x: {'file': x, 'label':0}, glob.glob('../dataset/dataset_B_Eye_Images/closedLeftEyes/*.jpg'))))
-        files.extend(list(map(lambda x: {'file': x, 'label':0}, glob.glob('../dataset/dataset_B_Eye_Images/closedRightEyes/*.jpg'))))
+        files = list(map(lambda x: {'file': x, 'label':1}, glob.glob('dataset/dataset_B_Eye_Images/openRightEyes/*.jpg')))
+        files.extend(list(map(lambda x: {'file': x, 'label':1}, glob.glob('dataset/dataset_B_Eye_Images/openLeftEyes/*.jpg'))))
+        files.extend(list(map(lambda x: {'file': x, 'label':0}, glob.glob('dataset/dataset_B_Eye_Images/closedLeftEyes/*.jpg'))))
+        files.extend(list(map(lambda x: {'file': x, 'label':0}, glob.glob('dataset/dataset_B_Eye_Images/closedRightEyes/*.jpg'))))
         random.shuffle(files)
         for file in files:
             img = cv2.imread(file['file'])
@@ -86,10 +89,10 @@ class DataSet(torch.utils.data.Dataset):
 
 
 def main():
+    global batch_size
+    global epochs
     # variables  -------------
-    batch_size = 64
     lr = 0.001
-    epochs = 40
     # ------------------------
 
     factory = DataSetFactory()
@@ -142,11 +145,11 @@ def main():
 
             accuracy = 100. * float(correct) / total
             if total_validation_loss <= min_validation_loss:
-                if epoch >= 3:
+                if epoch >= 10:
                     print('saving new model')
                     state = {'net': network.state_dict()}
-                    torch.save(state, 'Model/model_%d_%d_%.4f.t7' % (epoch + 1, accuracy, total_validation_loss / (j + 1)))
-                min_validation_loss = total_validation_loss
+                    torch.save(state, 'Model/model_%d_%d.t7' % (epoch, batch_size))
+                    min_validation_loss = total_validation_loss
 
             print('Epoch [%d/%d] validation Loss: %.4f, Accuracy: %.4f' % (
                 epoch + 1, epochs, total_validation_loss / (j + 1), accuracy))
