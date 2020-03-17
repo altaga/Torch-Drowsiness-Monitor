@@ -9,6 +9,7 @@ Drowsiness and atention monitor for driving or handling heavy machinery. Also de
 * [Introduction](#introduction)
 * [Materials](#materials)
 * [Connection Diagram](#connection-diagram)
+* [Laptop Test](#laptop-test)
 * [Jetson Setup](#jetson-setup)
 * [Drowsiness Monitor](#drowsiness-monitor)
 * [Blind Spot Monitor](#blind-spot-monitor)
@@ -65,22 +66,18 @@ https://www.amazon.com/s?k=power+inverter+truper&ref=nb_sb_noss_2
 https://www.adafruit.com/product/3405
 - OLED display.
 https://www.amazon.com/dp/B072Q2X2LL/ref=cm_sw_em_r_mt_dp_U_TMGqEb9YAGJ5Q
-- Any Speaker
+- Any Bluetooth Speaker or Bluetooth Audio Car System. x1.
 https://www.amazon.com/s?k=speaker&s=price-asc-rank&page=2&qid=1581202023&ref=sr_pg_2
 - USB TP-Link USB Wifi Adapter TL-WN725N.            x1.
 https://www.amazon.com/dp/B008IFXQFU/ref=cm_sw_em_r_mt_dp_U_jNukEbCWXT0E4
-- Any External USB Audio Adapter Sound Card.         x1.
-https://www.amazon.com/s?k=usb+sound+card+adapter&crid=2ESMWR4SXL4CD&sprefix=usb+sound+ca%2Caps%2C210&ref=nb_sb_ss_i_1_12
-- Logitech HD Laptop Webcam C615.                    x1.
-https://www.amazon.com/dp/B004YW7WCY/ref=cm_sw_em_r_mt_dp_U_8OukEbBJGXVNX
+- UGREEN USB Bluetooth 4.0 Adapter                   x1.
+https://www.amazon.com/dp/B01LX6HISL/ref=cm_sw_em_r_mt_dp_U_iK-BEbFBQ76BW
 - HD webcam                      .                   x1.
 https://canyon.eu/product/cne-cwc2/
 - 32 GB MicroSD Card.                                x1.
 https://www.amazon.com/dp/B06XWN9Q99/ref=cm_sw_em_r_mt_dp_U_XTllEbK0VKMAZ
 - 5V-4A AC/DC Adapter Power Supply Jack Connector.   x1.
 https://www.amazon.com/dp/B0194B80NY/ref=cm_sw_em_r_mt_dp_U_ISukEbJN7ABK3
-- USB Hub.                                           x1.
-https://www.amazon.com/s?k=usb+hub&ref=nb_sb_noss_1
 - VMA204.                                            x1.
 https://www.velleman.eu/products/view?id=435512
 
@@ -106,6 +103,10 @@ This is the connection diagram of the system:
 
 <img src="https://i.ibb.co/0DJTFs4/Scheme.png" width="800">
 
+# Laptop Test:
+
+
+
 # Jetson Nano Setup:
 
 ## SD card Setup:
@@ -117,7 +118,7 @@ https://developer.nvidia.com/jetson-nano-sd-card-image
 Format the SD card with SD Card Formatter and Flash the operating system in the SD with Etcher.
 
 Video: Click on the image
-[![Setup](https://i.ibb.co/jRBdzqS/Logo.png)](https://youtu.be/CJcYq71qwTE)
+[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/CJcYq71qwTE)
 
 ## Hardware Setup:
 
@@ -133,13 +134,14 @@ In this case we will use the Bus 1 because of its proximity to the 5V and GND pi
 
 After soldering our circuit looks like so:
 
-<img src="https://i.ibb.co/vh2rHtm/mod1.jpg" width="800">
-<img src="https://i.ibb.co/mHJYnQM/mod02.jpg" width="800">
+
+<img src="https://i.ibb.co/dbH7KDN/Whats-App-Image-2020-03-16-at-14-10-55-1.jpg" width="800">
+<img src="https://i.ibb.co/F40q4Rh/Whats-App-Image-2020-03-16-at-14-10-55.jpg" width="800">
 
 This next video show us how to setup our hardware:
 
 Video: Click on the image
-[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/a8YcOPVFyD8)
+[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](LINK)
 
 Curious Fact: The Nvidia Jetson Nano has the same IO pin distribution as a Raspberry Pi, so every shield for the Pi is backwards compatible with the Nano!
 
