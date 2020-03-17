@@ -147,7 +147,9 @@ Code to install all the libraries:
 
 Dentro de la carpeta de "https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness/Model" ya existe mi modelo llamado "BlinkModel.t7" que es el que uso para todas las pruebas, sin embargo el modelo puedes entrenarlo tu con el código llamado "train.py" en la carpeta "https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness".
 
-La database que se utilizo es una base de datos con 4846 imágenes de ojos izquierdos y derechos, abiertos y cerrados, donde aproximadamente la mitad son abiertos y cerrados para que la red fuera capaz de identificar el estado de los ojos, la base de datos esta en la siguiente carpeta "https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness/dataset/dataset_B_Eye_Images".
+La database que se utilizo es una base de datos con 4846 imágenes de ojos izquierdos y derechos, abiertos y cerrados, donde aproximadamente la mitad son abiertos y cerrados para que la red fuera capaz de identificar el estado de los ojos, la base de datos esta en la siguiente carpeta.
+
+https://github.com/altaga/Torch-Drowsiness-Monitor/tree/master/Drowsiness/dataset/dataset_B_Eye_Images
 
 El entrenamiento tiene como entrada los siguientes parámetros.
 
