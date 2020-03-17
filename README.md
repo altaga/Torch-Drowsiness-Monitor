@@ -151,19 +151,13 @@ La database que se utilizo es una base de datos con 4846 imágenes de ojos izqui
 
 El entrenamiento tiene como entrada los siguientes parámetros.
 
-input image shape: (24, 24)
-
-validation_ratio: 0.1
-
-batch_size: 64
-
-epochs: 40
-
-learning rate: 0.001
-
-loss function: cross entropy loss
-
-optimizer: Adam
+- input image shape: (24, 24)
+- validation_ratio: 0.1
+- batch_size: 64
+- epochs: 40
+- learning rate: 0.001
+- loss function: cross entropy loss
+- optimizer: Adam
 
 En la primera parte del codigo puedes modificar los parametros, segun tu criterio de entrenamiento.
 
