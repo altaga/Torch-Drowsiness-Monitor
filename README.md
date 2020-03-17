@@ -105,7 +105,59 @@ This is the connection diagram of the system:
 
 # Laptop Test:
 
+Para realizar el test del código en una computadora el primer paso sera tener un gestor de python environments como lo es Python Anaconda.
 
+https://www.anaconda.com/distribution/
+
+## Environment Creation:
+
+Primero crearemos un enviroment adecuado para pytorch.
+
+    conda create --name pytorch
+
+Para activar el enviroment ejecuta el siguiente comando:
+
+    activate pytorch
+
+En el caso de Anaconda la pagina de PyTorch tiene un pequeño widget que permite personalizar el código de instalación de PyTorch según el sistema operativo y el gestor de environments de python, en mi caso la configuración es la siguiente.
+
+https://pytorch.org/
+
+<img src="https://i.ibb.co/6RMJp5F/image.png" width="800">
+
+    conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+
+## Support Libraries:
+
+Ademas de el comando antes mencionado, es necesario instalar las siguientes librerias para que los codigos se ejecuten sin problema.
+
+- OpenCV
+- pillow
+- torchvision
+- requests
+- twilio
+- pygame
+- matplotlib
+- paho-mqtt
+
+Code to install all the libraries:
+
+    pip install opencv-python Pillow torchvision requests twilio pygame matplotlib paho-mqtt
+
+## Files Changes:
+
+Los códigos para correr en la laptop tienen las siguientes modificaciones.
+
+- Estan comentados los segmentos de codigo que involucran lectura del sensor del acelerometro.
+- Esta comentada la seccion de MQTT, en vez de eso los mansajes del MQTT se despliegan en la consola de python.
+- Esta comentada la seccion de notificacion de choque debido a que esta depende de la configuracion de Twilio y el uso del acelerometro.
+
+Para ejecutar los códigos correctamente solo es necesario ejecutarlos como se muestra a continuación.
+
+Video: Click on the image
+[![Torch](https://i.ibb.co/1MC19TG/Logo.png)](https://www.youtube.com/watch?v=Jg_PpRa7XLs)
+
+Ya que pudimos comprobar que todos los codigos funcionan podemos pasar a la configuracion de nuestro hardware para realizar nuestro producto.
 
 # Jetson Nano Setup:
 
@@ -118,7 +170,7 @@ https://developer.nvidia.com/jetson-nano-sd-card-image
 Format the SD card with SD Card Formatter and Flash the operating system in the SD with Etcher.
 
 Video: Click on the image
-[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/CJcYq71qwTE)
+[![Setup](https://i.ibb.co/1MC19TG/Logo.png)](https://youtu.be/tIUA2fRjauI)
 
 ## Hardware Setup:
 
