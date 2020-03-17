@@ -137,7 +137,7 @@ def preprocess(image_path):
         Depending on the quality of your camera, this number can vary 
         between 10 and 40, since this is the "sensitivity" to detect the eyes.
         """
-        sensi=24
+        sensi=20
         eyes = eye_cascade.detectMultiScale(face,1.3, sensi) 
         i=0
         for (ex,ey,ew,eh) in eyes:
@@ -204,7 +204,7 @@ def drow(images, model_name):
                 if(status =="Close"):
                     print("Distracted")
                     timerundis= time.time()
-                    if((timerundis-timebasedis)>3):
+                    if((timerundis-timebasedis)>1.5):
                         image = cv2.imread("display.jpg")
                         image = cv2.putText(image, 'Distracted', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
                         cv2.imwrite('display.jpg',image)
