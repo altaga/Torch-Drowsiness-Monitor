@@ -154,8 +154,11 @@ Los códigos para correr en la laptop tienen las siguientes modificaciones.
 
 Los códigos que se ejecutan en la computadora son los siguientes:
 
+Drowsiness Monitor:
 - https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/Drowsiness/computer.py
-- 
+
+YoloV3:
+- https://github.com/altaga/Torch-Drowsiness-Monitor/blob/master/YoloV3/computer.py
 
 Para ejecutar los códigos correctamente solo es necesario ejecutarlos como se muestra a continuación.
 
